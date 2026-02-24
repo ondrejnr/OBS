@@ -1,0 +1,18 @@
+name: FINAL-SSH-TEST
+on:
+  push:
+    branches: [ main ]
+jobs:
+  ssh-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ONLY-SSH-STEP
+        uses: appleboy/ssh-action@master
+        with:
+          host: 35.198.73.31
+          username: ondrejko_gulkas
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Konecne bezim na mojej instancii!"
+            export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
+            /home/ondrejko_gulkas/obs/ci/quality_gate.sh
