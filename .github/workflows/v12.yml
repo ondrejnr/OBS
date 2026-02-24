@@ -1,17 +1,16 @@
-name: FORCE-V11-SSH
-on:
-  push:
-    branches: [ main ]
+name: V12-SUPER-RESET
+on: [push]
 jobs:
-  ssh-deploy:
+  ssh-test:
     runs-on: ubuntu-latest
     steps:
-      - name: RUN-REMOTE-SCRIPT
+      - name: CHECK-CONNECTION
         uses: appleboy/ssh-action@master
         with:
           host: 35.198.73.31
           username: ondrejko_gulkas
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
-            /home/ondrejko_gulkas/obs/ci/quality_gate.sh
+            echo "Ak toto vidis v logu na Githube, vyhrali sme!"
+            hostname
+            kubectl get nodes
