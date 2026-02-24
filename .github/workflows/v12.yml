@@ -11,6 +11,10 @@ jobs:
           username: ondrejko_gulkas
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Ak toto vidis v logu na Githube, vyhrali sme!"
-            hostname
+            echo "Pripojenie uspesne, zistujem stav klastra..."
+            # Explicitne nastavenie cesty ku klastru
+            export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
+            
             kubectl get nodes
+            echo "--- Pody v OBS-DEV ---"
+            kubectl get pods -n obs-dev
