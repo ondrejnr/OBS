@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obs-web
+  namespace: obs-staging
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: obs-web
+  template:
+    metadata:
+      labels:
+        app: obs-web
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9113"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+      - name: nginx-exporter
+        image: nginx/nginx-prometheus-exporter:1.1.0
+        args:
+        - -nginx.scrape-uri=http://localhost:80/stub_status
+        ports:
+        - containerPort: 9113

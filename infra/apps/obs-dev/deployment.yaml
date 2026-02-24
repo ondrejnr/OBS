@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obs-web
+  namespace: obs-dev
+spec:
+  replicas: 1  # DEV má len 1 repliku
+  selector:
+    matchLabels:
+      app: obs-web
+  template:
+    metadata:
+      labels:
+        app: obs-web
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9113"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 25m      # Nízke pre DEV
+            memory: 32Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      - name: nginx-exporter
+        image: nginx/nginx-prometheus-exporter:1.1.0
+        args:
+          - -nginx.scrape-uri=http://localhost:80/stub_status
+        ports:
+        - containerPort: 9113
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            cpu: 50m
+            memory: 32Mi
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: obs-web-svc
+  namespace: obs-dev
+spec:
+  selector:
+    app: obs-web
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  - name: metrics
+    port: 9113
+    targetPort: 9113
+  type: ClusterIP

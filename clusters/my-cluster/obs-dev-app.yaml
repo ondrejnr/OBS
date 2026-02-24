@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: obs-dev-app
+  namespace: flux-system
+spec:
+  interval: 2m
+  path: "./infra/environments/dev"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  targetNamespace: obs-dev

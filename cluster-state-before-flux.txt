@@ -1,0 +1,138 @@
+NAMESPACE            NAME                                                   READY   STATUS      RESTARTS      AGE
+database             pod/etcd-0                                             1/1     Running     1 (12h ago)   14h
+default              pod/chaos-monkey                                       1/1     Running     0             162m
+default              pod/chaos-monkey2                                      1/1     Running     0             144m
+default              pod/load-test                                          0/1     Completed   0             120m
+default              pod/web-app-6dbb447849-s2d4z                           2/2     Running     0             81m
+default              pod/web-app-6dbb447849-zsdbc                           2/2     Running     0             81m
+flux-system          pod/helm-controller-78c9594699-jxtzm                   1/1     Running     0             15m
+flux-system          pod/kustomize-controller-6d798cff8f-m26r5              1/1     Running     0             15m
+flux-system          pod/notification-controller-7f6bd7f8b7-htbxk           1/1     Running     0             15m
+flux-system          pod/source-controller-6bc5d76bf-ckdzr                  1/1     Running     0             15m
+ingress-nginx        pod/ingress-nginx-admission-create-hkd2j               0/1     Completed   0             13h
+ingress-nginx        pod/ingress-nginx-admission-patch-59xg2                0/1     Completed   0             13h
+ingress-nginx        pod/ingress-nginx-controller-5c464c6d9b-qp7mq          1/1     Running     1 (26m ago)   12h
+kube-flannel         pod/kube-flannel-ds-45r79                              1/1     Running     1 (12h ago)   14h
+kube-system          pod/coredns-55cb58b774-lcnh8                           1/1     Running     1 (12h ago)   14h
+kube-system          pod/coredns-55cb58b774-xsd9c                           1/1     Running     1 (12h ago)   14h
+kube-system          pod/etcd-instance-20260224-080410                      1/1     Running     1 (12h ago)   14h
+kube-system          pod/kube-apiserver-instance-20260224-080410            1/1     Running     1 (12h ago)   14h
+kube-system          pod/kube-controller-manager-instance-20260224-080410   1/1     Running     4 (28m ago)   14h
+kube-system          pod/kube-proxy-nq929                                   1/1     Running     1 (12h ago)   14h
+kube-system          pod/kube-scheduler-instance-20260224-080410            1/1     Running     4 (28m ago)   14h
+local-path-storage   pod/local-path-provisioner-7d6d74594b-clqwn            1/1     Running     1 (12h ago)   14h
+logging              pod/elasticsearch-674c4d9c78-rfwlh                     1/1     Running     0             10h
+logging              pod/fluentd-qpdhh                                      1/1     Running     0             92m
+logging              pod/kibana-5db5c6df97-6nlbj                            1/1     Running     0             10h
+monitoring           pod/alertmanager-5fccd58d9b-v7jkb                      1/1     Running     0             86m
+monitoring           pod/grafana-6b7dc84b54-brsn6                           1/1     Running     1 (12h ago)   14h
+monitoring           pod/node-exporter-8w7tp                                1/1     Running     1 (12h ago)   14h
+monitoring           pod/prometheus-7586f5bbbc-plpl9                        1/1     Running     0             85m
+obs-dev              pod/obs-web-7cf99855d5-68tnf                           0/2     Pending     0             15m
+obs-dev              pod/obs-web-7cf99855d5-lktb5                           0/2     Pending     0             15m
+obs-prod             pod/obs-web-7b57d89b7d-gc8p6                           0/2     Pending     0             45m
+obs-prod             pod/obs-web-7b57d89b7d-gvtx4                           0/2     Pending     0             45m
+obs-prod             pod/obs-web-7b57d89b7d-gxvd7                           0/2     Pending     0             45m
+obs-prod             pod/obs-web-7b57d89b7d-rbrd9                           0/2     Pending     0             15m
+obs-prod             pod/obs-web-7b57d89b7d-xn666                           0/2     Pending     0             45m
+obs-staging          pod/obs-web-5f9b987cdb-gjz6s                           2/2     Running     0             45m
+obs-staging          pod/obs-web-5f9b987cdb-gtwzt                           2/2     Running     0             45m
+obs-staging          pod/obs-web-5f9b987cdb-kqsf2                           2/2     Running     0             45m
+web                  pod/nginx-exporter-5d47c87947-82nfh                    1/1     Running     1 (12h ago)   14h
+web                  pod/nginx-exporter-5d47c87947-wlfkc                    1/1     Running     1 (12h ago)   13h
+web                  pod/nginx-web-789978d5cd-5kzpt                         2/2     Running     0             12h
+web                  pod/nginx-web-789978d5cd-pqxz5                         2/2     Running     2 (12h ago)   12h
+web                  pod/nginx-web-789978d5cd-v2rtx                         2/2     Running     0             12h
+
+NAMESPACE       NAME                                         TYPE           CLUSTER-IP       EXTERNAL-IP                                PORT(S)                      AGE
+database        service/etcd                                 NodePort       10.110.224.254   <none>                                     2379:30379/TCP               14h
+default         service/kubernetes                           ClusterIP      10.96.0.1        <none>                                     443/TCP                      14h
+default         service/web-app-svc                          ClusterIP      10.108.16.22     <none>                                     80/TCP,9113/TCP              92m
+flux-system     service/notification-controller              ClusterIP      10.106.225.180   <none>                                     80/TCP                       15m
+flux-system     service/source-controller                    ClusterIP      10.105.216.169   <none>                                     80/TCP                       15m
+flux-system     service/webhook-receiver                     ClusterIP      10.102.133.13    <none>                                     80/TCP                       15m
+ingress-nginx   service/ingress-nginx-controller             NodePort       10.110.59.107    <none>                                     80:31936/TCP,443:31983/TCP   14h
+ingress-nginx   service/ingress-nginx-controller-admission   ClusterIP      10.105.150.60    <none>                                     443/TCP                      14h
+kube-system     service/kube-dns                             ClusterIP      10.96.0.10       <none>                                     53/UDP,53/TCP,9153/TCP       14h
+logging         service/elasticsearch                        ClusterIP      10.109.235.237   <none>                                     9200/TCP                     12h
+logging         service/kibana-service                       NodePort       10.107.252.197   <none>                                     5601:30561/TCP               12h
+monitoring      service/alertmanager                         NodePort       10.107.224.136   <none>                                     9093:30093/TCP               14h
+monitoring      service/grafana                              NodePort       10.104.24.29     <none>                                     3000:30030/TCP               14h
+monitoring      service/node-exporter                        ClusterIP      None             <none>                                     9100/TCP                     14h
+monitoring      service/prometheus                           NodePort       10.99.103.172    <none>                                     9090:30090/TCP               14h
+obs-dev         service/obs-web-svc                          ClusterIP      10.105.230.247   <none>                                     80/TCP                       46m
+obs-prod        service/obs-web-svc                          LoadBalancer   10.108.75.56     <pending>                                  80:31921/TCP                 45m
+obs-staging     service/obs-web-svc                          LoadBalancer   10.110.238.56    <pending>                                  80:30799/TCP                 45m
+web             service/kibana-bridge                        ExternalName   <none>           kibana-service.logging.svc.cluster.local   <none>                       12h
+web             service/nginx-exporter                       ClusterIP      10.111.86.163    <none>                                     9113/TCP                     14h
+web             service/nginx-service                        ClusterIP      10.108.146.241   <none>                                     80/TCP,9113/TCP              13h
+
+NAMESPACE      NAME                             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kube-flannel   daemonset.apps/kube-flannel-ds   1         1         1       1            1           <none>                   14h
+kube-system    daemonset.apps/kube-proxy        1         1         1       1            1           kubernetes.io/os=linux   14h
+logging        daemonset.apps/fluentd           1         1         1       1            1           <none>                   92m
+monitoring     daemonset.apps/node-exporter     1         1         1       1            1           <none>                   14h
+
+NAMESPACE            NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
+default              deployment.apps/web-app                    2/2     2            2           92m
+flux-system          deployment.apps/helm-controller            1/1     1            1           15m
+flux-system          deployment.apps/kustomize-controller       1/1     1            1           15m
+flux-system          deployment.apps/notification-controller    1/1     1            1           15m
+flux-system          deployment.apps/source-controller          1/1     1            1           15m
+ingress-nginx        deployment.apps/ingress-nginx-controller   1/1     1            1           14h
+kube-system          deployment.apps/coredns                    2/2     2            2           14h
+local-path-storage   deployment.apps/local-path-provisioner     1/1     1            1           14h
+logging              deployment.apps/elasticsearch              1/1     1            1           12h
+logging              deployment.apps/kibana                     1/1     1            1           11h
+monitoring           deployment.apps/alertmanager               1/1     1            1           86m
+monitoring           deployment.apps/grafana                    1/1     1            1           14h
+monitoring           deployment.apps/prometheus                 1/1     1            1           14h
+obs-dev              deployment.apps/obs-web                    0/2     2            0           46m
+obs-prod             deployment.apps/obs-web                    0/5     5            0           45m
+obs-staging          deployment.apps/obs-web                    3/3     3            3           45m
+web                  deployment.apps/nginx-exporter             1/1     1            1           14h
+web                  deployment.apps/nginx-web                  3/3     3            3           13h
+
+NAMESPACE            NAME                                                  DESIRED   CURRENT   READY   AGE
+default              replicaset.apps/web-app-5dd66b86b8                    0         0         0       92m
+default              replicaset.apps/web-app-6dbb447849                    2         2         2       81m
+default              replicaset.apps/web-app-7ddc599867                    0         0         0       92m
+flux-system          replicaset.apps/helm-controller-78c9594699            1         1         1       15m
+flux-system          replicaset.apps/kustomize-controller-6d798cff8f       1         1         1       15m
+flux-system          replicaset.apps/notification-controller-7f6bd7f8b7    1         1         1       15m
+flux-system          replicaset.apps/source-controller-6bc5d76bf           1         1         1       15m
+ingress-nginx        replicaset.apps/ingress-nginx-controller-5c464c6d9b   1         1         1       12h
+ingress-nginx        replicaset.apps/ingress-nginx-controller-6b4c86f89f   0         0         0       13h
+ingress-nginx        replicaset.apps/ingress-nginx-controller-6d5c9b9b9b   0         0         0       13h
+ingress-nginx        replicaset.apps/ingress-nginx-controller-6d675bf4c6   0         0         0       14h
+ingress-nginx        replicaset.apps/ingress-nginx-controller-74b8bb46b6   0         0         0       14h
+kube-system          replicaset.apps/coredns-55cb58b774                    2         2         2       14h
+local-path-storage   replicaset.apps/local-path-provisioner-7d6d74594b     1         1         1       14h
+logging              replicaset.apps/elasticsearch-54d89cff55              0         0         0       12h
+logging              replicaset.apps/elasticsearch-674c4d9c78              1         1         1       10h
+logging              replicaset.apps/kibana-59654b68bb                     0         0         0       10h
+logging              replicaset.apps/kibana-5db5c6df97                     1         1         1       10h
+logging              replicaset.apps/kibana-686d88949c                     0         0         0       11h
+logging              replicaset.apps/kibana-6f9f4cccbb                     0         0         0       10h
+logging              replicaset.apps/kibana-cf6954548                      0         0         0       11h
+monitoring           replicaset.apps/alertmanager-5fccd58d9b               1         1         1       86m
+monitoring           replicaset.apps/grafana-6b7dc84b54                    1         1         1       14h
+monitoring           replicaset.apps/prometheus-558ff57887                 0         0         0       14h
+monitoring           replicaset.apps/prometheus-59b8f5c5fb                 0         0         0       153m
+monitoring           replicaset.apps/prometheus-7586f5bbbc                 1         1         1       85m
+monitoring           replicaset.apps/prometheus-84b5b4b59                  0         0         0       14h
+monitoring           replicaset.apps/prometheus-84d584976c                 0         0         0       14h
+monitoring           replicaset.apps/prometheus-976fc5d7c                  0         0         0       14h
+obs-dev              replicaset.apps/obs-web-7cf99855d5                    2         2         0       46m
+obs-dev              replicaset.apps/obs-web-f5fc8d869                     0         0         0       42m
+obs-prod             replicaset.apps/obs-web-7b57d89b7d                    5         5         0       45m
+obs-staging          replicaset.apps/obs-web-5f9b987cdb                    3         3         3       45m
+web                  replicaset.apps/nginx-exporter-5d47c87947             1         1         1       14h
+web                  replicaset.apps/nginx-web-789978d5cd                  3         3         3       13h
+
+NAMESPACE   NAME                    READY   AGE
+database    statefulset.apps/etcd   1/1     14h
+
+NAMESPACE       NAME                                       STATUS     COMPLETIONS   DURATION   AGE
+ingress-nginx   job.batch/ingress-nginx-admission-create   Complete   1/1           8s         13h
+ingress-nginx   job.batch/ingress-nginx-admission-patch    Complete   1/1           21s        13h

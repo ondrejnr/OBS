@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: obs-web-svc
+  namespace: obs-prod
+spec:
+  selector:
+    app: obs-web
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
