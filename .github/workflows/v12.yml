@@ -11,17 +11,16 @@ jobs:
           username: ondrejko_gulkas
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # 1. Vojdi do projektu a stiahni najnovsi kod
             cd /home/ondrejko_gulkas/obs
+            # Pridanie výnimky priamo do SSH relácie
+            git config --global --add safe.directory /home/ondrejko_gulkas/obs
             git pull origin main
             
-            # 2. Nastav prostredie
             export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
-            export PROM_URL="http://prometheus-server.monitoring.svc.cluster.local:9090"
+            # OPRAVA: Služba sa volá len 'prometheus'
+            export PROM_URL="http://prometheus.monitoring.svc.cluster.local:9090"
             export ES_URL="http://elasticsearch.logging.svc.cluster.local:9200"
             export NAMESPACE="obs-dev"
             export SERVICE="obs-web-svc"
             
-            # 3. Spusti nas narocny Quality Gate
-            chmod +x ci/quality_gate.sh
             ./ci/quality_gate.sh
