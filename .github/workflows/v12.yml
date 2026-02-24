@@ -1,20 +1,27 @@
-name: V12-SUPER-RESET
+name: OBS-PROD-PIPELINE
 on: [push]
 jobs:
-  ssh-test:
+  quality-gate:
     runs-on: ubuntu-latest
     steps:
-      - name: CHECK-CONNECTION
+      - name: RUN-QUALITY-GATE-OVER-SSH
         uses: appleboy/ssh-action@master
         with:
           host: 35.198.73.31
           username: ondrejko_gulkas
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "Pripojenie uspesne, zistujem stav klastra..."
-            # Explicitne nastavenie cesty ku klastru
-            export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
+            # 1. Vojdi do projektu a stiahni najnovsi kod
+            cd /home/ondrejko_gulkas/obs
+            git pull origin main
             
-            kubectl get nodes
-            echo "--- Pody v OBS-DEV ---"
-            kubectl get pods -n obs-dev
+            # 2. Nastav prostredie
+            export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
+            export PROM_URL="http://prometheus-server.monitoring.svc.cluster.local:9090"
+            export ES_URL="http://elasticsearch.logging.svc.cluster.local:9200"
+            export NAMESPACE="obs-dev"
+            export SERVICE="obs-web-svc"
+            
+            # 3. Spusti nas narocny Quality Gate
+            chmod +x ci/quality_gate.sh
+            ./ci/quality_gate.sh
