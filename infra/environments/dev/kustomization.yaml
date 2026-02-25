@@ -5,4 +5,3 @@ resources:
   - 10-web-app.yaml
   - 11-web-app-svc.yaml
   - 12-nginx-config.yaml
-  - image-policy.yaml
