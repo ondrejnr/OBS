@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        # The comment below allows Flux to update the tag automatically
+        # Marker updated to point to the flux-system namespace
         image: ondrejnr/obs-web:1.0.0 # {"$imagepolicy": "flux-system:obs-web-policy"}
         ports:
         - containerPort: 80
