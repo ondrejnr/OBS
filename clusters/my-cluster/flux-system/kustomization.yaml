@@ -7,3 +7,5 @@ resources:
   - obs-dev.yaml
   - obs-staging.yaml
   - obs-prod.yaml
+  - existing-logging.yaml
+  - existing-monitoring.yaml
