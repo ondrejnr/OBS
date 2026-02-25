@@ -1,44 +1,55 @@
 #!/bin/bash
 set -e
 
-# Function to wait for Service IP and check readiness
-check_service() {
+# Funkcia na inteligentné čakanie na službu a jej pripravenosť
+check_ready() {
     local svc=$1
     local ns=$2
     local port=$3
     local endpoint=$4
-    local ip=""
+    local label=$5
 
-    echo "--- Checking $svc in $ns ---"
-    for i in {1..30}; do
-        ip=$(kubectl get svc "$svc" -n "$ns" -o jsonpath='{.spec.clusterIP}' 2>/dev/null || echo "")
+    echo "--- Kontrola: $label ($svc v $ns) ---"
+    for i in {1..40}; do
+        # Získanie ClusterIP
+        local ip=$(kubectl get svc "$svc" -n "$ns" -o jsonpath='{.spec.clusterIP}' 2>/dev/null || echo "")
+        
         if [ -n "$ip" ] && [ "$ip" != "<none>" ]; then
-            echo "Found IP for $svc: $ip. Testing endpoint..."
-            if curl -sSf --connect-timeout 5 "http://$ip:$port$endpoint" > /dev/null; then
-                echo "✅ Service $svc is READY"
+            # Skúška pripojenia cez curl
+            if curl -sSf --connect-timeout 2 "http://$ip:$port$endpoint" > /dev/null 2>&1; then
+                echo "✅ $label je pripravený (IP: $ip)"
                 return 0
             fi
         fi
-        echo "Waiting for $svc ($i/30)..."
+        echo "Čakám na $label... ($i/40)"
         sleep 5
     done
-    echo "❌ Timeout: Service $svc not ready after 150 seconds"
-    exit 1
+    echo "❌ CHYBA: $label nie je dostupný po limite!"
+    return 1
 }
 
 echo "----------------------------------------------------"
-echo "OBS FULL STACK QUALITY GATE - V25 (AUTO-DEPLOY)"
+echo "OBS FULL PIPELINE QUALITY GATE - VERSION 26"
 echo "----------------------------------------------------"
 
-# 1. Check Grafana (Monitoring)
-check_service "grafana" "monitoring" "3000" "/api/health"
+# 1. Kontrola Docker Hub obrazov (či pody vôbec bežia, nie sú v ImagePullBackOff)
+echo "[STEP 1] Kontrola stavu podov (Docker Hub / Images)..."
+if kubectl get pods -A | grep -E "ImagePullBackOff|ErrImagePull|CrashLoopBackOff"; then
+    echo "❌ Zistené chyby pri sťahovaní obrazov alebo pády podov!"
+    exit 1
+else
+    echo "✅ Pody nevykazujú chyby sťahovania."
+fi
 
-# 2. Check Elasticsearch (Logging)
-check_service "elasticsearch" "logging" "9200" "/_cluster/health?local=true"
+# 2. Kontrola Monitoringu (Grafana - namiesto chýbajúceho Promethea)
+check_ready "grafana" "monitoring" "3000" "/api/health" "Monitoring (Grafana)"
 
-# 3. Check OBS Web App (Staging)
-check_service "obs-web-svc" "obs-staging" "80" "/"
+# 3. Kontrola Loggingu (Elasticsearch)
+check_ready "elasticsearch" "logging" "9200" "/_cluster/health?local=true" "Logging (Elasticsearch)"
+
+# 4. Kontrola Web Aplikácie (Staging)
+check_ready "obs-web-svc" "obs-staging" "80" "/" "OBS Web Application"
 
 echo "----------------------------------------------------"
-echo "SUCCESS: All OBS services are healthy!"
+echo "VŠETKY OBS SLUŽBY SÚ OK - PIPELINE ÚSPEŠNÁ"
 echo "----------------------------------------------------"
