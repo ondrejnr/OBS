@@ -7,7 +7,7 @@ jobs:
       - name: SSH-EXECUTE-V21
         uses: appleboy/ssh-action@master
         with:
-          host: 35.198.73.31
+          host: 34.159.144.113
           username: ondrejko_gulkas
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
