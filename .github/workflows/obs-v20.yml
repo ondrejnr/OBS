@@ -1,10 +1,10 @@
-name: OBS-V20-DEPLOYMENT
+name: OBS-V21-DEPLOYMENT
 on: [push]
 jobs:
   gate-check:
     runs-on: ubuntu-latest
     steps:
-      - name: SSH-EXECUTE-V20
+      - name: SSH-EXECUTE-V21
         uses: appleboy/ssh-action@master
         with:
           host: 35.198.73.31
