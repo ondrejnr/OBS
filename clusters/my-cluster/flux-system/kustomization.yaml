@@ -10,4 +10,4 @@ resources:
   - existing-logging.yaml
   - existing-monitoring.yaml
   - dev-sync.yaml
-  - dev-image-policy.yaml
+  - dev-image-automation.yaml
