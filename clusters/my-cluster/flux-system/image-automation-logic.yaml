@@ -4,9 +4,8 @@ metadata:
   name: obs-web-repo
   namespace: flux-system
 spec:
-  image: ondrejnr/obs-web
+  image: ondrejnr1/obs-web
   interval: 1m0s
-  # TENTO RIADOK PRIDÁVAME:
   secretRef:
     name: dockerhub-auth
 ---
