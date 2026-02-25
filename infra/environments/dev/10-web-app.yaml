@@ -15,7 +15,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        # Marker updated to use ondrejnr1
         image: ondrejnr1/obs-web:1.0.0 # {"$imagepolicy": "flux-system:obs-web-policy"}
         ports:
         - containerPort: 80
