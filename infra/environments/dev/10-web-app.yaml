@@ -12,26 +12,10 @@ spec:
     metadata:
       labels:
         app: obs-web
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "9113"
     spec:
       containers:
       - name: nginx
-        image: nginx:alpine
+        # The comment below allows Flux to update the tag automatically
+        image: ondrejnr/obs-web:1.0.0 # {"$imagepolicy": "flux-system:obs-web-policy"}
         ports:
         - containerPort: 80
-        volumeMounts:
-        - name: config
-          mountPath: /etc/nginx/nginx.conf
-          subPath: nginx.conf
-      - name: nginx-exporter
-        image: nginx/nginx-prometheus-exporter:1.1.0
-        args:
-        - -nginx.scrape-uri=http://localhost:80/stub_status
-        ports:
-        - containerPort: 9113
-      volumes:
-      - name: config
-        configMap:
-          name: obs-nginx-config

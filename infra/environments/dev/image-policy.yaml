@@ -1,0 +1,20 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: obs-web-repo
+  namespace: flux-system
+spec:
+  image: ondrejnr/obs-web  # Ensure this matches your Docker Hub repo
+  interval: 1m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: obs-web-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: obs-web-repo
+  policy:
+    semver:
+      range: '>=1.0.0'
