@@ -21,7 +21,7 @@ spec:
     semver:
       range: '>=1.0.0'
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: obs-git-automation
@@ -39,7 +39,7 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      # ZJEDNODUŠENÁ ŠABLÓNA (Fix pre can't evaluate field error):
+      # FIX: Používame čistý text bez premenných
       messageTemplate: 'chore: automated image update'
     push:
       branch: main
