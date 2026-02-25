@@ -9,3 +9,4 @@ resources:
   - obs-prod.yaml
   - existing-logging.yaml
   - existing-monitoring.yaml
+  - dev-app-sync.yaml
