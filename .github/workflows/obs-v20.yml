@@ -1,10 +1,10 @@
-name: OBS-PROD-PIPELINE
+name: OBS-V20-DEPLOYMENT
 on: [push]
 jobs:
-  quality-gate:
+  gate-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Remote SSH Execution
+      - name: SSH-EXECUTE-V20
         uses: appleboy/ssh-action@master
         with:
           host: 35.198.73.31
@@ -14,11 +14,5 @@ jobs:
             cd /home/ondrejko_gulkas/obs
             git config --global --add safe.directory /home/ondrejko_gulkas/obs
             git pull origin main
-            
-            # Use 'prometheus' instead of 'prometheus-server'
             export KUBECONFIG=/home/ondrejko_gulkas/.kube/config
-            export PROM_URL="http://prometheus.monitoring.svc.cluster.local:9090"
-            export ES_URL="http://elasticsearch.logging.svc.cluster.local:9200"
-            export NAMESPACE="obs-dev"
-            
             ./ci/quality_gate.sh
