@@ -1,0 +1,24 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: dev-repo-source
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  url: https://github.com/ondrejnr/DEV.git
+  ref:
+    branch: main
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: dev-app-deployment
+  namespace: flux-system
+spec:
+  interval: 2m0s
+  path: "./infra/base"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev-repo-source
+  targetNamespace: dev-project

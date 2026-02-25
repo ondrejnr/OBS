@@ -1,0 +1,22 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: dev-app-repo
+  namespace: flux-system
+spec:
+  image: ondrejnr1/dev-app
+  interval: 1m0s
+  secretRef:
+    name: dockerhub-auth
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: dev-app-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: dev-app-repo
+  policy:
+    semver:
+      range: '>=1.0.0'
