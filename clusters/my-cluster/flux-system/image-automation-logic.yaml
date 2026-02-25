@@ -21,7 +21,7 @@ spec:
     semver:
       range: '>=1.0.0'
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
   name: obs-git-automation
@@ -39,7 +39,8 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: 'chore: automated image update to {{ .SelectedTargetImageTag }}'
+      # ZJEDNODUŠENÁ ŠABLÓNA (Fix pre can't evaluate field error):
+      messageTemplate: 'chore: automated image update'
     push:
       branch: main
   update:
